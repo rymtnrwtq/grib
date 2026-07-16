@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://taiga.borozdov.ru/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://taiga.borozdov.ru/assets/hero-crescents.png</image:loc>
+      <image:title>Сушёные белые грибы крупным планом</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://taiga.borozdov.ru/assets/taiga-forest.png</image:loc>
+      <image:title>Белый гриб в тайге</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://taiga.borozdov.ru/kedr.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://taiga.borozdov.ru/assets/kedr-hero.png</image:loc>
+      <image:title>Очищенное ядро кедрового ореха крупным планом</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://taiga.borozdov.ru/assets/kedr-cone.png</image:loc>
+      <image:title>Кедровая шишка на ветке в тайге</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://taiga.borozdov.ru/opt.html</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://taiga.borozdov.ru/assets/product-sacks.png</image:loc>
+      <image:title>Оптовые фасовки сушёного белого гриба</image:title>
+    </image:image>
+  </url>
+</urlset>
