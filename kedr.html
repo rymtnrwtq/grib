@@ -16,6 +16,7 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/110874795" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script>window.dataLayer = window.dataLayer || [];</script>
 <meta name="yandex-verification" content="80f947e774535d84" />
 <title>Кедровый орех купить — ядро без горечи | Из-под ели</title>
 <meta name="description" content="Крупное очищенное ядро кедрового ореха, урожай 2025. Собираю и чищу вручную, без горечи. Заказ от 500 г, доставка по России, гарантия возврата.">
@@ -564,8 +565,8 @@ class Component extends DCLogic {
   orderEndpoint = 'https://grib-orders.borozdov.workers.dev';
 
   products = [
-    { name: '500 г', desc: 'Минимальный заказ. Попробовать или на подарок.', price: '1 500 ₽', cta: 'Заказать', interest: 'Кедровый орех, 500 г', badge: 'минимальный заказ' },
-    { name: 'от 1 кг', desc: 'Дешевле за грамм, можно брать 1 кг и больше.', price: '1 400 ₽/кг', cta: 'Заказать', interest: 'Кедровый орех, от 1 кг', badge: 'выгодно', value: true }
+    { name: '500 г', desc: 'Минимальный заказ. Попробовать или на подарок.', price: '1 500 ₽', cta: 'Заказать', interest: 'Кедровый орех, 500 г', badge: 'минимальный заказ', sku: 'kedr-500g', priceValue: 1500 },
+    { name: 'от 1 кг', desc: 'Дешевле за грамм, можно брать 1 кг и больше.', price: '1 400 ₽/кг', cta: 'Заказать', interest: 'Кедровый орех, от 1 кг', badge: 'выгодно', value: true, sku: 'kedr-1kg', priceValue: 1400 }
   ];
 
   features = [
@@ -666,18 +667,40 @@ class Component extends DCLogic {
     this._revealSafety = setTimeout(() => els.forEach(show), 1800);
   }
 
+  ecommerceItems(interest) {
+    const product = this.products.find((p) => p.interest === interest);
+    return product ? [{ id: product.sku, name: product.interest, price: product.priceValue, quantity: 1 }] : [];
+  }
+
   open(interest) {
-    return () => this.setState({
-      modalOpen: true,
-      sent: false,
-      interest: interest,
-      msg: interest ? ('Здравствуйте! Интересует: ' + interest + '. ') : '',
-      contact: ''
-    });
+    return () => {
+      const items = this.ecommerceItems(interest);
+      if (items.length && window.dataLayer) {
+        window.dataLayer.push({ ecommerce: null });
+        window.dataLayer.push({ event: 'addToCart', ecommerce: { currencyCode: 'RUB', add: { products: items } } });
+      }
+      this.setState({
+        modalOpen: true,
+        sent: false,
+        interest: interest,
+        msg: interest ? ('Здравствуйте! Интересует: ' + interest + '. ') : '',
+        contact: ''
+      });
+    };
   }
 
   submitOrder(e) {
     e.preventDefault();
+    if (window.dataLayer) {
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          currencyCode: 'RUB',
+          purchase: { actionField: { id: 'lead-' + Date.now() }, products: this.ecommerceItems(this.state.interest) }
+        }
+      });
+    }
     this.setState({ sent: true });
     fetch(this.orderEndpoint, {
       method: 'POST',

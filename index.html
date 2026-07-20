@@ -16,6 +16,7 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/110874795" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script>window.dataLayer = window.dataLayer || [];</script>
 <meta name="yandex-verification" content="80f947e774535d84" />
 <title>Сушёный белый гриб (боровик) купить | Из-под ели</title>
 <meta name="description" content="Дикий сушёный белый гриб урожая 2025: целые шляпки, светлый срез, живой аромат. От 100 г, доставка по России, гарантия возврата. Есть опт.">
@@ -617,10 +618,10 @@ class Component extends DCLogic {
   orderEndpoint = 'https://grib-orders.borozdov.workers.dev';
 
   products = [
-    { name: '100 г', desc: 'Минимальный заказ. Хватит попробовать в готовке или на подарок.', price: '1 200 ₽', cta: 'Заказать', interest: '100 г', badge: 'минимальный заказ' },
-    { name: '250 г', desc: 'Для тех, кто готовит регулярно.', price: '2 950 ₽', cta: 'Заказать', interest: '250 г' },
-    { name: '500 г', desc: 'Выгоднее, хватает надолго.', price: '5 800 ₽', cta: 'Заказать', interest: '500 г', badge: 'выгодно', value: true },
-    { name: '1 кг', desc: 'Активным кулинарам и в подарок.', price: '11 000 ₽', cta: 'Заказать', interest: '1 кг' }
+    { name: '100 г', desc: 'Минимальный заказ. Хватит попробовать в готовке или на подарок.', price: '1 200 ₽', cta: 'Заказать', interest: '100 г', badge: 'минимальный заказ', sku: 'grib-100g', priceValue: 1200 },
+    { name: '250 г', desc: 'Для тех, кто готовит регулярно.', price: '2 950 ₽', cta: 'Заказать', interest: '250 г', sku: 'grib-250g', priceValue: 2950 },
+    { name: '500 г', desc: 'Выгоднее, хватает надолго.', price: '5 800 ₽', cta: 'Заказать', interest: '500 г', badge: 'выгодно', value: true, sku: 'grib-500g', priceValue: 5800 },
+    { name: '1 кг', desc: 'Активным кулинарам и в подарок.', price: '11 000 ₽', cta: 'Заказать', interest: '1 кг', sku: 'grib-1kg', priceValue: 11000 }
   ];
 
   features = [
@@ -721,18 +722,40 @@ class Component extends DCLogic {
     this._revealSafety = setTimeout(() => els.forEach(show), 1800);
   }
 
+  ecommerceItems(interest) {
+    const product = this.products.find((p) => p.interest === interest);
+    return product ? [{ id: product.sku, name: 'Сушёный белый гриб, ' + product.name, price: product.priceValue, quantity: 1 }] : [];
+  }
+
   open(interest) {
-    return () => this.setState({
-      modalOpen: true,
-      sent: false,
-      interest: interest,
-      msg: interest ? ('Здравствуйте! Интересует: ' + interest + '. ') : '',
-      contact: ''
-    });
+    return () => {
+      const items = this.ecommerceItems(interest);
+      if (items.length && window.dataLayer) {
+        window.dataLayer.push({ ecommerce: null });
+        window.dataLayer.push({ event: 'addToCart', ecommerce: { currencyCode: 'RUB', add: { products: items } } });
+      }
+      this.setState({
+        modalOpen: true,
+        sent: false,
+        interest: interest,
+        msg: interest ? ('Здравствуйте! Интересует: ' + interest + '. ') : '',
+        contact: ''
+      });
+    };
   }
 
   submitOrder(e) {
     e.preventDefault();
+    if (window.dataLayer) {
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          currencyCode: 'RUB',
+          purchase: { actionField: { id: 'lead-' + Date.now() }, products: this.ecommerceItems(this.state.interest) }
+        }
+      });
+    }
     this.setState({ sent: true });
     fetch(this.orderEndpoint, {
       method: 'POST',

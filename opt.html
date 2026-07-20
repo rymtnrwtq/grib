@@ -16,6 +16,7 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/110874795" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+<script>window.dataLayer = window.dataLayer || [];</script>
 <meta name="yandex-verification" content="80f947e774535d84" />
 <title>Белый гриб оптом от 4 800 ₽/кг из тайги | Из-под ели</title>
 <meta name="description" content="Опт сушёного белого гриба, предзаказ на урожай 2026. От 1 кг, от 4 800 ₽/кг. Декларация ТР ТС, лаб. испытания, образец перед закупкой.">
@@ -652,6 +653,19 @@ class Component extends DCLogic {
 
   submitOrder(e) {
     e.preventDefault();
+    if (window.dataLayer) {
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+        event: 'purchase',
+        ecommerce: {
+          currencyCode: 'RUB',
+          purchase: {
+            actionField: { id: 'lead-' + Date.now() },
+            products: [{ id: 'opt-request', name: 'Оптовая заявка: ' + (this.state.f_volume || 'объём не указан'), quantity: 1 }]
+          }
+        }
+      });
+    }
     this.setState({ sent: true });
     fetch(this.orderEndpoint, {
       method: 'POST',
