@@ -38,4 +38,10 @@
       <image:title>Оптовые фасовки сушёного белого гриба</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://taiga.borozdov.ru/privacy</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
 </urlset>
