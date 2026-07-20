@@ -487,7 +487,8 @@
               <div style="display:inline-block; font-size:13px; color:#5d2a1a; background:#efe0c8; border-radius:9999px; padding:6px 12px; margin-bottom:16px;">Интересует: {{ interest }}</div>
             </sc-if>
             <form onSubmit="{{ onSubmit }}">
-              <textarea value="{{ msg }}" onInput="{{ onMsgInput }}" placeholder="Ваше имя и что интересует" rows="4" style="width:100%; min-height:112px; padding:14px; border:1px solid #e7e0d2; border-radius:16px; font-size:16px; line-height:1.5; color:#241a12; background:#faf8f2; resize:vertical; margin-bottom:14px;"></textarea>
+              <textarea value="{{ msg }}" onInput="{{ onMsgInput }}" placeholder="Ваше имя и что интересует" rows="4" style="width:100%; min-height:112px; padding:14px; border:1px solid #e7e0d2; border-radius:16px; font-size:16px; line-height:1.5; color:#241a12; background:#faf8f2; resize:vertical; margin-bottom:12px;"></textarea>
+              <input value="{{ contact }}" onInput="{{ onContactInput }}" placeholder="Телефон, Telegram или почта" style="width:100%; padding:14px; border:1px solid #e7e0d2; border-radius:16px; font-size:16px; color:#241a12; background:#faf8f2; margin-bottom:14px;">
               <button type="submit" style="width:100%; font-family:'Inter',sans-serif; font-size:16px; font-weight:500; color:#faf8f2; background:#241a12; border:none; border-radius:9999px; padding:15px 26px; cursor:pointer; transition:background .2s ease, transform .16s cubic-bezier(.16,1,.3,1);" style-hover="background:#3a2a1c;">Отправить</button>
             </form>
             <div style="display:flex; align-items:center; gap:12px; margin:22px 0 16px; color:#a49b8c; font-size:13px;"><span style="height:1px; background:#e7e0d2; flex:1;"></span>или напишите напрямую<span style="height:1px; background:#e7e0d2; flex:1;"></span></div>
@@ -507,7 +508,7 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;animateOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Поведение&quot;}}">
 class Component extends DCLogic {
   rootRef = React.createRef();
-  state = { isDesktop: true, showStickyCta: false, modalOpen: false, sent: false, interest: '', msg: '', mobileMenuOpen: false };
+  state = { isDesktop: true, showStickyCta: false, modalOpen: false, sent: false, interest: '', msg: '', contact: '', mobileMenuOpen: false };
 
   // URL воркера Cloudflare, который пересылает заявку в Telegram. Токен бота там не хранится.
   orderEndpoint = 'https://grib-orders.borozdov.workers.dev';
@@ -618,7 +619,8 @@ class Component extends DCLogic {
       modalOpen: true,
       sent: false,
       interest: interest,
-      msg: interest ? ('Здравствуйте! Интересует: ' + interest + '. ') : ''
+      msg: interest ? ('Здравствуйте! Интересует: ' + interest + '. ') : '',
+      contact: ''
     });
   }
 
@@ -628,7 +630,7 @@ class Component extends DCLogic {
     fetch(this.orderEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ source: 'nuts', interest: this.state.interest, msg: this.state.msg })
+      body: JSON.stringify({ source: 'nuts', interest: this.state.interest, msg: this.state.msg, contact: this.state.contact })
     }).catch((err) => console.error('order send failed', err));
   }
 
@@ -653,10 +655,12 @@ class Component extends DCLogic {
       formOpen: !this.state.sent,
       interest: this.state.interest,
       msg: this.state.msg,
+      contact: this.state.contact,
       openOrder: this.open('Кедровый орех, 500 г'),
       openWrite: this.open(''),
       closeModal: () => this.setState({ modalOpen: false }),
       onMsgInput: (e) => this.setState({ msg: e.target.value }),
+      onContactInput: (e) => this.setState({ contact: e.target.value }),
       onSubmit: (e) => this.submitOrder(e),
       stop: (e) => e.stopPropagation()
     };
