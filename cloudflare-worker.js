@@ -36,6 +36,11 @@ export default {
       if (data.interest) lines.push('Интересует: ' + data.interest);
       if (data.msg) lines.push('Сообщение: ' + data.msg);
       if (data.contact) lines.push('Контакт: ' + data.contact);
+    } else if (data.source === 'salted') {
+      lines.push('🧂 Новая заявка — Солёный гриб');
+      if (data.interest) lines.push('Интересует: ' + data.interest);
+      if (data.msg) lines.push('Сообщение: ' + data.msg);
+      if (data.contact) lines.push('Контакт: ' + data.contact);
     } else {
       lines.push('🍄 Новая заявка — Розница (гриб)');
       if (data.interest) lines.push('Интересует: ' + data.interest);

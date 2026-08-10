@@ -39,6 +39,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://taiga.borozdov.ru/salted</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://taiga.borozdov.ru/assets/hero-crescents.webp</image:loc>
+      <image:title>Белые грибы для засолки</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://taiga.borozdov.ru/privacy</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>yearly</changefreq>

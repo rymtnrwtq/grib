@@ -202,6 +202,8 @@
   p { text-wrap:pretty; }
   *:focus-visible { outline:2px solid #b46a2b; outline-offset:3px; border-radius:6px; }
   ::selection { background:#efe0c8; color:#5d2a1a; }
+  .photo-frame { position:relative; width:100%; overflow:hidden; padding-top:66.67%; }
+  .photo-frame img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
   textarea { font-family:'Inter',sans-serif; }
   .contact-icon { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:9999px; border:1px solid #e7e0d2; color:#6f675c; flex:0 0 auto; transition:background .2s ease, color .2s ease, border-color .2s ease, transform .16s cubic-bezier(.16,1,.3,1); }
   .contact-icon:active { transform:scale(0.92); }
@@ -403,10 +405,10 @@
         <h2 style="font-family:'Fraunces',Georgia,serif; font-weight:400; font-size:clamp(2rem,3.6vw,2.75rem); line-height:1.16; letter-spacing:-0.015em; margin:0 0 14px;">Выберите свою</h2>
         <p style="font-size:16px; color:#6f675c; margin:0; max-width:62ch; line-height:1.55;">Отборный дикий белый — редкость: месяц сбора в году, ручная переборка каждой шляпки. Берёте <span style="color:#241a12;">напрямую у заготовителя</span> — без перекупов и подмены сорта.</p>
       </div>
-      <div data-reveal class="img-zoom" style="border-radius:24px; overflow:hidden; margin-bottom:44px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.10),0 8px 10px -6px rgba(0,0,0,0.10),0 0 0 1px rgba(0,0,0,0.05);">
+      <div data-reveal class="img-zoom photo-frame" style="border-radius:24px; margin-bottom:44px; box-shadow:0 20px 25px -5px rgba(0,0,0,0.10),0 8px 10px -6px rgba(0,0,0,0.10),0 0 0 1px rgba(0,0,0,0.05);">
         <picture>
           <source srcset="assets/buy-kraft-bag.webp" type="image/webp">
-          <img src="assets/buy-kraft-bag.png" alt="Крафтовый пакет с сушёным белым грибом" width="1254" height="1254" loading="lazy" decoding="async" style="width:100%; aspect-ratio:3/2; object-fit:cover; object-position:32% 28%; display:block;">
+          <img src="assets/buy-kraft-bag.png" alt="Крафтовый пакет с сушёным белым грибом" width="1254" height="1254" loading="lazy" decoding="async" style="object-position:32% 28%;">
         </picture>
       </div>
       <div>
@@ -499,7 +501,7 @@
           <p style="font-size:18px; line-height:1.6; color:#6f675c; margin:0; max-width:56ch;">Солю холодным способом, по старому рецепту, без уксуса — готов к столу сразу. Партии небольшие, цену и наличие уточняю по запросу.</p>
         </div>
         <div style="flex:0 0 auto;">
-          <button type="button" onClick="{{ openSalted }}" class="btn-pill" style="display:inline-flex; font-family:'Inter',sans-serif; font-size:16px; font-weight:500; color:#faf8f2; background:#241a12; border:none; border-radius:9999px; padding:15px 26px; cursor:pointer; transition:background .2s ease, transform .16s cubic-bezier(.16,1,.3,1);" style-hover="background:#3a2a1c;">Спросить про наличие →</button>
+          <a href="salted" class="btn-pill" style="display:inline-flex; font-family:'Inter',sans-serif; font-size:16px; font-weight:500; color:#faf8f2; background:#241a12; border:none; border-radius:9999px; padding:15px 26px; cursor:pointer; transition:background .2s ease, transform .16s cubic-bezier(.16,1,.3,1);" style-hover="background:#3a2a1c;">Смотреть солёный →</a>
         </div>
       </div>
     </div>
@@ -551,6 +553,7 @@
               <a href="{{ c.href }}" target="_blank" rel="noopener" style="font-size:15px; color:#faf8f2; font-weight:500;" style-hover="color:#b46a2b;">{{ c.label }} <span style="color:#b46a2b;">→</span></a>
             </sc-for>
             <a href="kedr" style="font-size:15px; color:#faf8f2; font-weight:500;" style-hover="color:#b46a2b;">Кедровый орех <span style="color:#b46a2b;">→</span></a>
+            <a href="salted" style="font-size:15px; color:#faf8f2; font-weight:500;" style-hover="color:#b46a2b;">Солёный гриб <span style="color:#b46a2b;">→</span></a>
             <a href="opt" style="font-size:15px; color:#faf8f2; font-weight:500;" style-hover="color:#b46a2b;">Опт <span style="color:#b46a2b;">→</span></a>
           </div>
         </div>
@@ -796,7 +799,6 @@ class Component extends DCLogic {
       contact: this.state.contact,
       openOrder: this.open('100 г'),
       openWrite: this.open(''),
-      openSalted: this.open('Солёный белый гриб'),
       closeModal: () => this.setState({ modalOpen: false }),
       onMsgInput: (e) => this.setState({ msg: e.target.value }),
       onContactInput: (e) => this.setState({ contact: e.target.value }),
