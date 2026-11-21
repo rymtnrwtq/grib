@@ -1,67 +1,69 @@
-// Cloudflare Worker: принимает заявки с сайта и пересылает их в Telegram.
-// Токен бота и chat_id хранятся в Settings → Variables and Secrets на dashboard.cloudflare.com,
-// в этот файл они НЕ вписываются — сюда его вставлять нельзя, файл публикуется вместе с сайтом.
+import { normalizePhone } from "./assets/phone.js";
+
+const products = {
+  retail: "Сушёный белый гриб",
+  nuts: "Кедровый орех",
+  salted: "Солёный белый гриб",
+  wholesale: "Опт · сушёный белый гриб",
+};
+const headers = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Cache-Control": "no-store",
+};
 
 export default {
   async fetch(request, env) {
-    const cors = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    };
-
-    if (request.method === 'OPTIONS') {
-      return new Response(null, { headers: cors });
-    }
-    if (request.method !== 'POST') {
-      return new Response('Method not allowed', { status: 405, headers: cors });
-    }
-
+    const reply = (body, status) => new Response(body, { status, headers });
+    if (request.method === "OPTIONS") return reply(null, 204);
+    if (request.method !== "POST") return reply("Method not allowed", 405);
     let data;
     try {
       data = await request.json();
     } catch {
-      return new Response('Bad request', { status: 400, headers: cors });
+      return reply("Invalid JSON", 400);
     }
+    const phone = normalizePhone(data?.phone ?? data?.contact);
+    if (!phone) return reply("Нужен номер телефона", 422);
+    if (!Object.hasOwn(products, data.source))
+      return reply("Unknown product", 400);
 
-    const lines = [];
-    if (data.source === 'wholesale') {
-      lines.push('🍄 Новая заявка — ОПТ');
-      if (data.name) lines.push('Имя: ' + data.name);
-      if (data.company) lines.push('Компания: ' + data.company);
-      if (data.volume) lines.push('Объём/сорт: ' + data.volume);
-      if (data.contact) lines.push('Контакт: ' + data.contact);
-    } else if (data.source === 'nuts') {
-      lines.push('🌲 Новая заявка — Кедровый орех');
-      if (data.interest) lines.push('Интересует: ' + data.interest);
-      if (data.msg) lines.push('Сообщение: ' + data.msg);
-      if (data.contact) lines.push('Контакт: ' + data.contact);
-    } else if (data.source === 'salted') {
-      lines.push('🧂 Новая заявка — Солёный гриб');
-      if (data.interest) lines.push('Интересует: ' + data.interest);
-      if (data.msg) lines.push('Сообщение: ' + data.msg);
-      if (data.contact) lines.push('Контакт: ' + data.contact);
-    } else {
-      lines.push('🍄 Новая заявка — Розница (гриб)');
-      if (data.interest) lines.push('Интересует: ' + data.interest);
-      if (data.msg) lines.push('Сообщение: ' + data.msg);
-      if (data.contact) lines.push('Контакт: ' + data.contact);
+    const lines = [
+      "Обратный звонок · " + products[data.source],
+      "Телефон: " + phone,
+    ];
+    for (const [key, label] of Object.entries({
+      interest: "Заказ",
+      name: "Имя",
+      company: "Компания",
+      volume: "Объём и сорт",
+      msg: "Комментарий",
+    })) {
+      if (typeof data[key] === "string" && data[key].trim()) {
+        lines.push(
+          label + ": " + data[key].trim().slice(0, key === "msg" ? 900 : 180),
+        );
+      }
     }
-    const text = lines.join('\n');
-
-    if (!env.BOT_TOKEN || !env.CHAT_ID) {
-      return new Response('Server not configured', { status: 500, headers: cors });
+    if (!env.BOT_TOKEN || !env.CHAT_ID)
+      return reply("Server not configured", 503);
+    try {
+      const sent = await fetch(
+        `https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: env.CHAT_ID,
+            text: lines.join("\n"),
+          }),
+        },
+      );
+      if (sent.ok && (await sent.json()).ok === true) return reply("OK", 200);
+    } catch {
+      // The client keeps the customer's input available for another attempt.
     }
-
-    const tgRes = await fetch(`https://api.telegram.org/bot${env.BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: env.CHAT_ID, text }),
-    });
-
-    if (!tgRes.ok) {
-      return new Response('Telegram error', { status: 502, headers: cors });
-    }
-    return new Response('OK', { headers: cors });
+    return reply("Telegram unavailable", 502);
   },
 };
