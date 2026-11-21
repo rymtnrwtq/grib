@@ -30,7 +30,7 @@
     <meta property="og:url" content="https://taiga.borozdov.ru/" />
     <meta
       property="og:image"
-      content="https://taiga.borozdov.ru/assets/hero-crescents.webp"
+      content="https://taiga.borozdov.ru/assets/porcini-dried.webp"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -43,12 +43,12 @@
     />
     <meta
       name="twitter:image"
-      content="https://taiga.borozdov.ru/assets/hero-crescents.webp"
+      content="https://taiga.borozdov.ru/assets/porcini-dried.webp"
     />
     <link rel="icon" href="/assets/favicon.svg" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/assets/store.css" />
-    <script type="module" src="/assets/store.js"></script>
+    <link rel="stylesheet" href="/assets/store.css?v=20261121-2" />
+    <script type="module" src="/assets/store.js?v=20261121-2"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -59,7 +59,7 @@
             "name": "Из-под ели",
             "description": "Дикий сушёный белый гриб ручного сбора, сбор в сентябре 2026 года. Розничная продажа от 100 г.",
             "url": "https://taiga.borozdov.ru/",
-            "image": "https://taiga.borozdov.ru/assets/hero-crescents.webp",
+            "image": "https://taiga.borozdov.ru/assets/porcini-dried.webp",
             "priceRange": "850 - 8500 RUB",
             "areaServed": "RU",
             "address": {
@@ -68,11 +68,7 @@
               "addressCountry": "RU"
             },
             "telephone": "+79139162888",
-            "sameAs": [
-              "https://t.me/Borozdov13",
-              "https://wa.me/79139162888",
-              "https://max.ru/u/f9LHodD0cOIuLWzlKWCCV3m9tJJ9HkO5he_L4e2H43AgdWCUQ3WftR-Y_ks"
-            ]
+            "sameAs": ["https://t.me/Borozdov13"]
           },
           {
             "@type": "Product",
@@ -218,7 +214,7 @@
                 "name": "Можно увидеть фото партии перед заказом?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Да, всегда пришлю свежие фото или видео текущей партии в Telegram или WhatsApp — до оплаты."
+                  "text": "Да, всегда пришлю свежие фото или видео текущей партии в Telegram — до оплаты."
                 }
               },
               {
@@ -327,17 +323,19 @@
         </div>
         <figure class="hero-photo">
           <img
-            src="/assets/hero-crescents.webp"
-            alt="Светлые ломтики сушёных белых грибов на крафтовой бумаге"
+            src="/assets/porcini-dried.webp"
             srcset="
-              /assets/hero-crescents-mobile.webp  720w,
-              /assets/hero-crescents.webp        1254w
+              /assets/porcini-dried-mobile.webp  720w,
+              /assets/porcini-dried.webp        1440w
             "
             sizes="(max-width:720px) 92vw, 46vw"
+            width="1440"
+            height="960"
+            alt="Ломтики сушёных белых грибов на льняном полотне"
             fetchpriority="high"
             decoding="async"
           />
-          <figcaption>Белый гриб первого сорта</figcaption>
+          <figcaption>Сушёный белый гриб</figcaption>
         </figure>
       </section>
       <div class="facts">
@@ -447,30 +445,67 @@
                 placeholder="+7 913 123-45-67"
               />
               <p id="phone-error" class="error" aria-live="polite"></p>
-              <label for="weight">Фасовка</label
-              ><select name="interest" id="weight">
-                <option value="100 г" data-price="850 ₽">100 г · 850 ₽</option>
-                <option value="250 г" data-price="2 125 ₽">
-                  250 г · 2 125 ₽
-                </option>
-                <option value="500 г" data-price="4 250 ₽">
-                  500 г · 4 250 ₽
-                </option>
-                <option value="1 кг" data-price="8 500 ₽">
-                  1 кг · 8 500 ₽
-                </option>
-              </select>
-              <details>
-                <summary>Добавить комментарий</summary>
-                <label for="msg">Что вас интересует?</label
-                ><textarea
-                  class="ym-disable-keys"
-                  id="msg"
-                  name="msg"
-                  rows="2"
-                  maxlength="900"
-                ></textarea>
-              </details>
+              <div class="weight-picker">
+                <span class="field-label" id="weight-label">Фасовка</span>
+                <details id="weight-picker">
+                  <summary aria-labelledby="weight-label weight-current">
+                    <span id="weight-current">100 г · 850 ₽</span>
+                  </summary>
+                  <div
+                    class="weight-menu"
+                    role="radiogroup"
+                    aria-labelledby="weight-label"
+                  >
+                    <label class="weight-option"
+                      ><input
+                        type="radio"
+                        name="interest"
+                        value="100 г"
+                        data-price="850 ₽"
+                        checked
+                      /><span>100 г</span
+                      ><span class="option-price">850 ₽</span></label
+                    >
+                    <label class="weight-option"
+                      ><input
+                        type="radio"
+                        name="interest"
+                        value="250 г"
+                        data-price="2 125 ₽"
+                      /><span>250 г</span
+                      ><span class="option-price">2 125 ₽</span></label
+                    >
+                    <label class="weight-option"
+                      ><input
+                        type="radio"
+                        name="interest"
+                        value="500 г"
+                        data-price="4 250 ₽"
+                      /><span>500 г</span
+                      ><span class="option-price">4 250 ₽</span></label
+                    >
+                    <label class="weight-option"
+                      ><input
+                        type="radio"
+                        name="interest"
+                        value="1 кг"
+                        data-price="8 500 ₽"
+                      /><span>1 кг</span
+                      ><span class="option-price">8 500 ₽</span></label
+                    >
+                  </div>
+                </details>
+              </div>
+
+              <label for="msg">Комментарий <small>по желанию</small></label
+              ><textarea
+                class="ym-disable-keys"
+                id="msg"
+                name="msg"
+                rows="2"
+                maxlength="900"
+              ></textarea>
+
               <button class="btn primary" type="submit">Перезвоните мне</button>
               <p class="fine">
                 Отправляя заявку, вы соглашаетесь с
@@ -519,14 +554,40 @@
         </div>
       </section>
       <section class="section wrap story" id="how">
-        <figure class="story-photo">
-          <img
-            src="/assets/macro-srez.webp"
-            alt="Светлый срез молодого боровика"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
+        <div class="story-series">
+          <figure class="story-photo">
+            <img
+              src="/assets/porcini-forest.webp"
+              srcset="
+                /assets/porcini-forest-mobile.webp  720w,
+                /assets/porcini-forest.webp        1440w
+              "
+              sizes="(max-width:720px) 92vw, 46vw"
+              width="1440"
+              height="960"
+              alt="Два молодых боровика во мху под елью"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Белые грибы в лесу</figcaption>
+          </figure>
+          <figure class="story-photo">
+            <img
+              src="/assets/macro-srez.webp"
+              srcset="
+                /assets/macro-srez-mobile.webp  720w,
+                /assets/macro-srez.webp        1254w
+              "
+              sizes="(max-width:720px) 92vw, 46vw"
+              width="1254"
+              height="1254"
+              alt="Светлый срез молодого боровика"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Светлый срез молодого боровика</figcaption>
+          </figure>
+        </div>
         <div>
           <p class="eyebrow">О заготовке</p>
           <h2>Как я сушу грибы</h2>
@@ -589,7 +650,7 @@
             <summary>Можно увидеть фото партии перед заказом?</summary>
             <p>
               Да, всегда пришлю свежие фото или видео текущей партии в Telegram
-              или WhatsApp — до оплаты.
+              — до оплаты.
             </p>
           </details>
           <details>
@@ -633,10 +694,6 @@
           <a class="head-tel" href="tel:+79139162888">+7 913 916-28-88</a>
           <div class="foot-links">
             <a href="https://t.me/Borozdov13">Telegram</a
-            ><a href="https://wa.me/79139162888">WhatsApp</a
-            ><a
-              href="https://max.ru/u/f9LHodD0cOIuLWzlKWCCV3m9tJJ9HkO5he_L4e2H43AgdWCUQ3WftR-Y_ks"
-              >MAX</a
             ><a href="/privacy">Политика обработки данных</a>
           </div>
         </div>

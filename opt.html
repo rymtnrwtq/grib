@@ -47,8 +47,8 @@
     />
     <link rel="icon" href="/assets/favicon.svg" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/assets/store.css" />
-    <script type="module" src="/assets/store.js"></script>
+    <link rel="stylesheet" href="/assets/store.css?v=20261121-2" />
+    <script type="module" src="/assets/store.js?v=20261121-2"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -68,11 +68,7 @@
               "addressCountry": "RU"
             },
             "telephone": "+79139162888",
-            "sameAs": [
-              "https://t.me/Borozdov13",
-              "https://wa.me/79139162888",
-              "https://max.ru/u/f9LHodD0cOIuLWzlKWCCV3m9tJJ9HkO5he_L4e2H43AgdWCUQ3WftR-Y_ks"
-            ]
+            "sameAs": ["https://t.me/Borozdov13"]
           },
           {
             "@type": "Product",
@@ -256,12 +252,14 @@
         <figure class="hero-photo">
           <img
             src="/assets/product-sacks.webp"
-            alt="Сушёные белые грибы, расфасованные в мешки"
             srcset="
               /assets/product-sacks-mobile.webp  720w,
               /assets/product-sacks.webp        1254w
             "
             sizes="(max-width:720px) 92vw, 46vw"
+            width="1254"
+            height="1254"
+            alt="Сушёные белые грибы, расфасованные в мешки"
             fetchpriority="high"
             decoding="async"
           />
@@ -341,31 +339,30 @@
                 maxlength="180"
                 placeholder="Например, 10 кг целых шляпок"
               />
-              <details>
-                <summary>Добавить комментарий</summary>
-                <label for="buyer">Имя</label
-                ><input
-                  name="name"
-                  autocomplete="name"
-                  class="ym-disable-keys"
-                  id="buyer"
-                  maxlength="100"
-                /><label for="company">Компания</label
-                ><input
-                  name="company"
-                  autocomplete="organization"
-                  class="ym-disable-keys"
-                  id="company"
-                  maxlength="180"
-                /><label for="msg">Что вас интересует?</label
-                ><textarea
-                  class="ym-disable-keys"
-                  id="msg"
-                  name="msg"
-                  rows="2"
-                  maxlength="900"
-                ></textarea>
-              </details>
+
+              <label for="buyer">Имя <small>по желанию</small></label
+              ><input
+                name="name"
+                autocomplete="name"
+                class="ym-disable-keys"
+                id="buyer"
+                maxlength="100"
+              /><label for="company">Компания <small>по желанию</small></label
+              ><input
+                name="company"
+                autocomplete="organization"
+                class="ym-disable-keys"
+                id="company"
+                maxlength="180"
+              /><label for="msg">Комментарий <small>по желанию</small></label
+              ><textarea
+                class="ym-disable-keys"
+                id="msg"
+                name="msg"
+                rows="2"
+                maxlength="900"
+              ></textarea>
+
               <button class="btn primary" type="submit">Перезвоните мне</button>
               <p class="fine">
                 Отправляя заявку, вы соглашаетесь с
@@ -408,14 +405,40 @@
         </dl>
       </section>
       <section class="section wrap story" id="how">
-        <figure class="story-photo">
-          <img
-            src="/assets/buy-kraft-bag.webp"
-            alt="Крафт-пакет сушёных белых грибов"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
+        <div class="story-series">
+          <figure class="story-photo">
+            <img
+              src="/assets/porcini-dried.webp"
+              srcset="
+                /assets/porcini-dried-mobile.webp  720w,
+                /assets/porcini-dried.webp        1440w
+              "
+              sizes="(max-width:720px) 92vw, 46vw"
+              width="1440"
+              height="960"
+              alt="Ломтики боровика после сушки"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Белый гриб после сушки</figcaption>
+          </figure>
+          <figure class="story-photo">
+            <img
+              src="/assets/buy-kraft-bag.webp"
+              srcset="
+                /assets/buy-kraft-bag-mobile.webp  720w,
+                /assets/buy-kraft-bag.webp        1254w
+              "
+              sizes="(max-width:720px) 92vw, 46vw"
+              width="1254"
+              height="1254"
+              alt="Крафт-пакет сушёных белых грибов"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>Сушёные боровики в крафт-пакете</figcaption>
+          </figure>
+        </div>
         <div>
           <p class="eyebrow">О заготовке</p>
           <h2>От образца до регулярных поставок</h2>
@@ -514,10 +537,6 @@
           <a class="head-tel" href="tel:+79139162888">+7 913 916-28-88</a>
           <div class="foot-links">
             <a href="https://t.me/Borozdov13">Telegram</a
-            ><a href="https://wa.me/79139162888">WhatsApp</a
-            ><a
-              href="https://max.ru/u/f9LHodD0cOIuLWzlKWCCV3m9tJJ9HkO5he_L4e2H43AgdWCUQ3WftR-Y_ks"
-              >MAX</a
             ><a href="/privacy">Политика обработки данных</a>
           </div>
         </div>

@@ -7,6 +7,7 @@ const phoneError = document.querySelector("#phone-error");
 const status = document.querySelector("#form-status");
 const submit = form.querySelector('[type="submit"]');
 const pack = form.elements.interest;
+const picker = document.querySelector("#weight-picker");
 const prices = document.querySelectorAll("[data-pack]");
 let busy = false;
 
@@ -17,8 +18,10 @@ function goal(id) {
 function selectPack(value) {
   if (!pack || !value) return;
   pack.value = value;
-  const selected = pack.selectedOptions?.[0];
+  const selected = form.querySelector('input[name="interest"]:checked');
   if (!selected) return;
+  document.querySelector("#weight-current").textContent =
+    value + " · " + selected.dataset.price;
   document.querySelector("#hero-price").textContent = selected.dataset.price;
   for (const button of prices) {
     button.setAttribute("aria-pressed", String(button.dataset.pack === value));
@@ -39,7 +42,42 @@ document.addEventListener("click", (event) => {
     phone.focus({ preventScroll: true });
   }
 });
-pack?.addEventListener("change", () => selectPack(pack.value));
+if (picker) {
+  const trigger = picker.querySelector("summary");
+  function closePicker() {
+    picker.open = false;
+    trigger.focus({ preventScroll: true });
+  }
+  picker.addEventListener("change", () => selectPack(pack.value));
+  picker.addEventListener("click", (event) => {
+    const option = event.target.closest(".weight-option");
+    if (!option || !event.detail) return;
+    if (!event.target.matches("input")) event.preventDefault();
+    selectPack(option.querySelector("input").value);
+    closePicker();
+  });
+  picker.addEventListener("keydown", (event) => {
+    if (event.target === trigger && event.key === "ArrowDown") {
+      event.preventDefault();
+      picker.open = true;
+      picker.querySelector("input:checked").focus();
+    } else if (
+      picker.open &&
+      (event.key === "Escape" ||
+        (event.target.matches("input") && ["Enter", " "].includes(event.key)))
+    ) {
+      event.preventDefault();
+      closePicker();
+    }
+  });
+  document.addEventListener("pointerdown", (event) => {
+    if (!picker.contains(event.target)) picker.open = false;
+  });
+  picker.addEventListener("focusout", (event) => {
+    if (event.relatedTarget && !picker.contains(event.relatedTarget))
+      picker.open = false;
+  });
+}
 phone.addEventListener("input", () => {
   phone.removeAttribute("aria-invalid");
   phoneError.textContent = "";

@@ -30,7 +30,7 @@
     <meta property="og:url" content="https://taiga.borozdov.ru/salted" />
     <meta
       property="og:image"
-      content="https://taiga.borozdov.ru/assets/taiga-forest.webp"
+      content="https://taiga.borozdov.ru/assets/porcini-salted.webp"
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
@@ -43,12 +43,12 @@
     />
     <meta
       name="twitter:image"
-      content="https://taiga.borozdov.ru/assets/taiga-forest.webp"
+      content="https://taiga.borozdov.ru/assets/porcini-salted.webp"
     />
     <link rel="icon" href="/assets/favicon.svg" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/assets/store.css" />
-    <script type="module" src="/assets/store.js"></script>
+    <link rel="stylesheet" href="/assets/store.css?v=20261121-2" />
+    <script type="module" src="/assets/store.js?v=20261121-2"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -59,7 +59,7 @@
             "name": "Из-под ели",
             "description": "Солёный белый гриб холодного посола, ручная засолка небольшими партиями.",
             "url": "https://taiga.borozdov.ru/salted",
-            "image": "https://taiga.borozdov.ru/assets/taiga-forest.webp",
+            "image": "https://taiga.borozdov.ru/assets/porcini-salted.webp",
             "priceRange": "цена по запросу",
             "areaServed": "RU",
             "address": {
@@ -68,17 +68,13 @@
               "addressCountry": "RU"
             },
             "telephone": "+79139162888",
-            "sameAs": [
-              "https://t.me/Borozdov13",
-              "https://wa.me/79139162888",
-              "https://max.ru/u/f9LHodD0cOIuLWzlKWCCV3m9tJJ9HkO5he_L4e2H43AgdWCUQ3WftR-Y_ks"
-            ]
+            "sameAs": ["https://t.me/Borozdov13"]
           },
           {
             "@type": "Product",
             "name": "Солёный белый гриб холодного посола",
             "description": "Солёный белый гриб холодного посола, без уксуса, готов к столу. Ручная засолка, небольшие партии.",
-            "image": "https://taiga.borozdov.ru/assets/taiga-forest.webp",
+            "image": "https://taiga.borozdov.ru/assets/porcini-salted.webp",
             "sku": "salted-grib",
             "brand": {
               "@type": "Brand",
@@ -250,17 +246,19 @@
         </div>
         <figure class="hero-photo">
           <img
-            src="/assets/taiga-forest.webp"
-            alt="Белый гриб и корзина в лесу"
+            src="/assets/porcini-salted.webp"
             srcset="
-              /assets/taiga-forest-mobile.webp  720w,
-              /assets/taiga-forest.webp        1536w
+              /assets/porcini-salted-mobile.webp  720w,
+              /assets/porcini-salted.webp        1440w
             "
             sizes="(max-width:720px) 92vw, 46vw"
+            width="1440"
+            height="960"
+            alt="Солёные белые грибы в банке с рассолом и на блюдце"
             fetchpriority="high"
             decoding="async"
           />
-          <figcaption>Белый гриб в тайге</figcaption>
+          <figcaption>Белые грибы холодного посола</figcaption>
         </figure>
       </section>
       <div class="facts">
@@ -332,17 +330,16 @@
                 placeholder="+7 913 123-45-67"
               />
               <p id="phone-error" class="error" aria-live="polite"></p>
-              <details>
-                <summary>Добавить комментарий</summary>
-                <label for="msg">Что вас интересует?</label
-                ><textarea
-                  class="ym-disable-keys"
-                  id="msg"
-                  name="msg"
-                  rows="2"
-                  maxlength="900"
-                ></textarea>
-              </details>
+
+              <label for="msg">Комментарий <small>по желанию</small></label
+              ><textarea
+                class="ym-disable-keys"
+                id="msg"
+                name="msg"
+                rows="2"
+                maxlength="900"
+              ></textarea>
+
               <button class="btn primary" type="submit">Перезвоните мне</button>
               <p class="fine">
                 Отправляя заявку, вы соглашаетесь с
@@ -393,10 +390,18 @@
         <figure class="story-photo">
           <img
             src="/assets/macro-srez.webp"
+            srcset="
+              /assets/macro-srez-mobile.webp  720w,
+              /assets/macro-srez.webp        1254w
+            "
+            sizes="(max-width:720px) 92vw, 46vw"
+            width="1254"
+            height="1254"
             alt="Молодой белый гриб в разрезе"
             loading="lazy"
             decoding="async"
           />
+          <figcaption>Молодой белый гриб в разрезе</figcaption>
         </figure>
         <div>
           <p class="eyebrow">О заготовке</p>
@@ -487,10 +492,6 @@
           <a class="head-tel" href="tel:+79139162888">+7 913 916-28-88</a>
           <div class="foot-links">
             <a href="https://t.me/Borozdov13">Telegram</a
-            ><a href="https://wa.me/79139162888">WhatsApp</a
-            ><a
-              href="https://max.ru/u/f9LHodD0cOIuLWzlKWCCV3m9tJJ9HkO5he_L4e2H43AgdWCUQ3WftR-Y_ks"
-              >MAX</a
             ><a href="/privacy">Политика обработки данных</a>
           </div>
         </div>
